@@ -20,5 +20,9 @@ from bookings.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
+    path("", home, name="home"),
+    path("bookings/", booking_list, name="booking_list"),
+    path("bookings/new/", booking_create, name="booking_create"),
+    path("bookings/edit/<int:booking_id>/", booking_update, name="booking_update"),
+    path("bookings/delete/<int:booking_id>/", booking_delete, name="booking_delete"),
 ]
