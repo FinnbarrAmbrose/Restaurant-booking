@@ -1,0 +1,9 @@
+{% extends "bookings/base.html" %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Welcome to Our Restaurant</h1>
+        <p>Book your table now!</p>
+        <a href="{% url 'booking_create' %}" class="btn btn-primary">Make a Booking</a>
+    </div>
+{% endblock %}
