@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import Booking
 from .forms import BookingForm
+from django.contrib import messages 
 
 
 def home(request):
@@ -82,7 +83,8 @@ def user_login(request):
         if user is not None:
             login(request, user)
             return redirect("home")
-    
+        else:
+           messages.error(request, "Invalid username or password")
     return render(request, "bookings/login.html")
 
 def user_logout(request):
