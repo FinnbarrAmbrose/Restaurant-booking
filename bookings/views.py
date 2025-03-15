@@ -1,4 +1,5 @@
 from django.shortcuts import render
+
 from .models import Booking
 from .forms import BookingForm
 
@@ -41,3 +42,12 @@ def booking_update(request, booking_id):
 
     return render(request, "bookings/booking_form.html", {"form": form})
 
+
+def booking_delete(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, user=request.user)
+
+    if request.method == "POST":
+        booking.delete()
+        return redirect("booking_list")  # Redirect to booking list
+
+    return render(request, "bookings/booking_confirm_delete.html", {"booking": booking})
