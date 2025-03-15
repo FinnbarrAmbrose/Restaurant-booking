@@ -51,3 +51,24 @@ def booking_delete(request, booking_id):
         return redirect("booking_list")  # Redirect to booking list
 
     return render(request, "bookings/booking_confirm_delete.html", {"booking": booking})
+
+
+# Login and registration views
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from .forms import UserRegisterForm
+
+def register(request):
+    if request.method == "POST":
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get("username")
+            raw_password = form.cleaned_data.get("password1")
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect("home")
+    else:
+        form = UserRegisterForm()
+    return render(request, "bookings/register.html", {"form": form})
