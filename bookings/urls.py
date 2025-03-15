@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home
+from .views import home, booking_list ,booking_update , booking_create, booking_delete
 
 urlpatterns = [
     path('', home, name='home'),
