@@ -1,5 +1,7 @@
 from django import forms
 from .models import Booking
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class BookingForm(forms.ModelForm):
     class Meta:
@@ -10,3 +12,15 @@ class BookingForm(forms.ModelForm):
             'time': forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
             'guests': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 7}), # Limit the guests to 7I think I'll add ina call aheadfor parties larger than 7just as a general rule of table size
         }
+
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ["username", "email", "password1", "password2"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({"class": "form-control"})
