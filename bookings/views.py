@@ -8,14 +8,14 @@ from .forms import BookingForm
 def home(request):
     return render(request, "bookings/home.html")
 
-
+@login_required
 def booking_list(request):
     bookings = Booking.objects.filter(user=request.user).order_by('date', 'time')
     return render(request, "bookings/booking_list.html", {"bookings": bookings})
 
 
 
-
+@login_required
 def booking_create(request):
     if request.method == "POST":
         form = BookingForm(request.POST)
@@ -29,7 +29,7 @@ def booking_create(request):
     return render(request, "bookings/booking_form.html", {"form": form})
 
 
-
+@login_required
 def booking_update(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id, user=request.user)
 
@@ -43,7 +43,7 @@ def booking_update(request, booking_id):
 
     return render(request, "bookings/booking_form.html", {"form": form})
 
-
+@login_required
 def booking_delete(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id, user=request.user)
 
@@ -59,7 +59,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from .forms import UserRegisterForm
-
+ 
 def register(request):
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
