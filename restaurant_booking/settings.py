@@ -36,6 +36,8 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
+LOGIN_URL = "/login/"
+
 # Application definition
 
 INSTALLED_APPS = [
