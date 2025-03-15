@@ -81,4 +81,10 @@ def user_login(request):
         if user is not None:
             login(request, user)
             return redirect("home")
+    
     return render(request, "bookings/login.html")
+
+def user_logout(request):
+    logout(request)
+    return redirect("home")
+    
