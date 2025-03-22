@@ -34,7 +34,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "default-secret-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1","https://restaurant-booking-a-d5df88975bf0.herokuapp.com/"]
 
 LOGIN_URL = "/login/"
 
