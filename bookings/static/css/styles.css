@@ -78,3 +78,7 @@ footer {
   .custom2-btn:hover {
     background-color: #d49b39; /* Darker shade on hover */
   }
+
+ .padding {
+    padding: 20px;
+  }
