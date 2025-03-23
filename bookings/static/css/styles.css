@@ -4,7 +4,6 @@ html, body {
     display: flex;
     flex-direction: column;
     font-family: 'Georgia', serif;
-   
     color: #2b2b2b;
 }
 .content-wrapper {
@@ -60,4 +59,14 @@ footer {
     .hide425 {
       display: none;
     }
+  }
+
+  .custom-btn {
+    background-color: #a47e3b; /* A rich gold/brown */
+    color: white;
+    border: none;
+  }
+  
+  .custom-btn:hover {
+    background-color: #d49b39; /* Darker shade on hover */
   }
