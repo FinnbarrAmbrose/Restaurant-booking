@@ -12,7 +12,6 @@ html, body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url('your-image-url.jpg') no-repeat center center;
     background-size: cover;
     width: 100%;
     height: 100vh;
@@ -68,5 +67,14 @@ footer {
   }
   
   .custom-btn:hover {
+    background-color: #d49b39; /* Darker shade on hover */
+  }
+
+  .custom2-btn {
+    color: white;
+    border: none;
+  }
+  
+  .custom2-btn:hover {
     background-color: #d49b39; /* Darker shade on hover */
   }
