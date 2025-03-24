@@ -1,30 +1,34 @@
 {% extends "bookings/base.html" %}
 
 {% block content %}
-<h2><strong>Login</strong></h2>
-    <form method="post" class="padding">
-        {% csrf_token %}
-                <label for="username" class="form-label padding">Username</label>
-                <input type="text" id="username" name="username" class="form-control" required>
-            
-                <label for="password" class="form-label padding">Password</label>
-                <input type="password" id="password" name="password" class="form-control" required>
-            
-            {% if messages %}
-            <div class="alert alert-danger">
-                {% for message in messages %}
-                    {{ message }}
-                {% endfor %}
-            </div>
-            {% endif %}
-<div class="padding">
-            <button type="submit" class="btn custom-btn ">login</button>
-            </div>
-        </form>
-        <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
-      </div>
-      
+<div class="content-wrapper ">
+  <div class=" blackback padding text-center">
+      <h2><strong>Login</strong></h2>
+      <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input type="text" id="username" name="username" class="form-control input-small" required>
+          </div>
+          <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" id="password" name="password" class="form-control input-small" required>
+          </div>
 
-    
-   
+          {% if messages %}
+          <div class="alert alert-danger">
+              {% for message in messages %}
+                  {{ message }}
+              {% endfor %}
+          </div>
+          {% endif %}
+
+          <button type="submit" class="btn custom-btn mt-3">Login</button>
+      </form>
+
+      <p class="mt-3">Don't have an account?
+          <a href="{% url 'register' %}" class="custom-btn" style="padding: 5px 10px; border-radius: 5px; text-decoration: none;">Register here</a>
+      </p>
+  </div>
+</div>
 {% endblock %}
