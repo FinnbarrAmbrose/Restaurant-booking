@@ -1,11 +1,14 @@
 {% extends "bookings/base.html" %}
 
 {% block content %}
+<div class="content-wrapper ">
+    <div class=" blackback padding text-center">
     <h2>Register</h2>
     <form method="post" class="padding">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn custom-btn">Register</button>
     </form>
-    
+    </div>
+</div>
 {% endblock %}
