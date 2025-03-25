@@ -28,7 +28,7 @@ html, body {
     align-items: center;
     background-size: cover;
     width: 100%;
-    height: 100vh;
+    height: 75vh;
     color: white;
     text-align: center;
 }
@@ -75,7 +75,11 @@ footer {
 .blackback {
     background-color: rgba(33, 40, 48, 0.70);
     color: white;
-   
+  
+}
+.box-size {
+    width: 75%;
+    height: 750%;
 }
 
 @media (max-width: 425px) {

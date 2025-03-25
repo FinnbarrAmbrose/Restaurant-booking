@@ -2,10 +2,14 @@
 {% extends "bookings/base.html" %}
 
 {% block content %}
+<div class="content-wrapper ">
+    <div class=" blackback padding text-center box-size">
     <h2>Make a Booking</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-success">Submit Booking</button>
     </form>
+    </div>
+</div>
 {% endblock %}

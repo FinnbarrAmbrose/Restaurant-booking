@@ -1,6 +1,8 @@
 {% extends "bookings/base.html" %}
 
 {% block content %}
+<div class="content-wrapper-register ">
+    <div class=" blackback padding text-center box-size">
     <h2>My Bookings</h2>
     {% if bookings %}
         <ul class="list-group">
@@ -17,4 +19,6 @@
     {% else %}
         <p>No bookings found.</p>
     {% endif %}
+    </div>
+</div>
 {% endblock %}
