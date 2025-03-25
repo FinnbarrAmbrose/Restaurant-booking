@@ -37,14 +37,43 @@ html, body {
 
 
 footer {
-    background-color: #212830;
-    color: white;
+    font-size: 0.9rem;
     padding: 15px 0;
     text-align: center;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
 }
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+}
+
+.footer-left,
+.footer-right {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-center {
+  flex: 1;
+  
+}
+
+
+
+.text-gold {
+  color: #d49b39 ;
+}
+
+
+.social-icons a {
+text-decoration: none;
+transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+color: #ffffff;
+}
+
 
 @media (max-width: 768px) {
   footer {
@@ -111,16 +140,4 @@ footer {
     padding: 20px;
   }
 
-  .text-gold {
-    color:  #d49b39;
-}
-
-.social-icons a {
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.social-icons a:hover {
-  color: #d49b39;
-}
 
