@@ -115,3 +115,12 @@ footer {
     color:  #d49b39;
 }
 
+.social-icons a {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #d49b39;
+}
+
