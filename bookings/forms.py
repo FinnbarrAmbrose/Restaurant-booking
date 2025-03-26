@@ -20,6 +20,14 @@ class BookingForm(forms.ModelForm):
             if guests < 1 or guests > 4:
                 raise ValidationError("Each table must have between 1 and 4 guests.")
             return guests
+        
+        def clean_date(self):
+            booking_date = self.cleaned_data.get('date')
+
+            if booking_date < date.today():
+                raise ValidationError("You cannot book a table in the past look to the future.")
+            
+            return booking_date
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
