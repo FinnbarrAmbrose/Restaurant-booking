@@ -24,15 +24,35 @@ class BookingForm(forms.ModelForm):
             raise ValidationError("Each table is only allowed 1 to 4 guests.")
         return guests
         
+
+    def clean(self):
+        cleaned_data = super().clean()
+        booking_date = cleaned_data.get('date')
+        guests = cleaned_data.get('guests')
+
+        if not booking_date or not guests:
+            return cleaned_data 
+
+        if booking_date < date.today():
+            self.add_error('date', "You cannot book a table in the past. insted look to the future.")
+            return cleaned_data
+
+        # 1 table per booking
+        total_tables_booked = Booking.objects.filter(date=booking_date).count()
+        if total_tables_booked >= 10:
+            raise ValidationError("Sorry, we are to put popularon on this day. Please select another day.")
+
+        
+        return cleaned_data
+
     def clean(self):
         booking_date = self.cleaned_data.get('date')
 
-        if booking_date < date.today():
-            raise ValidationError("You cannot book a table in the past. insted look to the future.")
+        
             
         existing_bookings = Booking.objects.filter(date=booking_date).count()
         if existing_bookings >= 10:
-            raise ValidationError("Sorry, we are Two put popularon this day. Please select another day.")
+            raise ValidationError("Sorry, we are to put popularon this day. Please select another day.")
 
 
         return booking_date
