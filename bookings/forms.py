@@ -3,11 +3,29 @@ from .models import Booking
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from datetime import date
+from datetime import date, time
 from django.db.models import Sum
 
 
+
 class BookingForm(forms.ModelForm):
+    
+# opens times
+    TIME_CHOICES = [
+        (time(18, 0), "6:00 PM"),
+        (time(19, 0), "7:00 PM"),
+        (time(20, 0), "8:00 PM"),
+        (time(21, 0), "9:00 PM"),
+        (time(22, 0), "10:00 PM"),
+        (time(23, 0), "11:00 PM"),
+    ]
+
+    time = forms.ChoiceField(
+        choices=TIME_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+
     class Meta:
         model = Booking
         fields = ['date', 'time', 'guests']
