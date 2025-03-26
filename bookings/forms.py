@@ -27,6 +27,11 @@ class BookingForm(forms.ModelForm):
             if booking_date < date.today():
                 raise ValidationError("You cannot book a table in the past look to the future.")
             
+            existing_bookings = Booking.objects.filter(date=booking_date).count()
+            if existing_bookings >= 10:
+                raise ValidationError("Sorry, we are fully booked for this date. Please select another day.")
+
+
             return booking_date
 
 class UserRegisterForm(UserCreationForm):
