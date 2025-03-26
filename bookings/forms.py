@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from datetime import date
+from django.db.models import Sum
+
 
 class BookingForm(forms.ModelForm):
     class Meta:
@@ -15,24 +17,25 @@ class BookingForm(forms.ModelForm):
             'guests': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 4}), # Limit the guests to 4 
         }
 
-        def clean_guests(self):
-            guests = self.cleaned_data.get('guests')
-            if guests < 1 or guests > 4:
-                raise ValidationError("Each table must have between 1 and 4 guests.")
-            return guests
+ # guest count (1 to 4 )
+    def clean_guests(self):
+        guests = self.cleaned_data.get('guests')
+        if guests < 1 or guests > 4:
+            raise ValidationError("Each table is only allowed 1 to 4 guests.")
+        return guests
         
-        def clean_date(self):
-            booking_date = self.cleaned_data.get('date')
+    def clean(self):
+        booking_date = self.cleaned_data.get('date')
 
-            if booking_date < date.today():
-                raise ValidationError("You cannot book a table in the past look to the future.")
+        if booking_date < date.today():
+            raise ValidationError("You cannot book a table in the past. insted look to the future.")
             
-            existing_bookings = Booking.objects.filter(date=booking_date).count()
-            if existing_bookings >= 10:
-                raise ValidationError("Sorry, we are fully booked for this date. Please select another day.")
+        existing_bookings = Booking.objects.filter(date=booking_date).count()
+        if existing_bookings >= 10:
+            raise ValidationError("Sorry, we are Two put popularon this day. Please select another day.")
 
 
-            return booking_date
+        return booking_date
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
