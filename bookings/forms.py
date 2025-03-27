@@ -18,11 +18,6 @@ class ContactMessageForm(forms.ModelForm):
             'additional_notes': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Any special requirements like wheelchair access'}),
         }
 
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
-        super().__init__(*args, **kwargs)
-        if user:
-            self.fields['booking'].queryset = Booking.objects.filter(user=user)
 
 
 
