@@ -1,0 +1,26 @@
+{% extends "bookings/base.html" %}
+
+{% block content %}
+<div class="content-wrapper ">
+    <div class=" blackback padding text-center ">
+        <h2 class="mb-3">Contact the Restaurant</h2>
+        <p class="mb-4">Select one of your bookings and let us know about any dietary requirements or special needs.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="text-start">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn custom-btn mt-3">Submit Message</button>
+        </form>
+
+        {% if messages %}
+            <div class="mt-4">
+                {% for message in messages %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
