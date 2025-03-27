@@ -63,8 +63,7 @@ from .forms import UserRegisterForm, ContactMessageForm
 from .models import Booking, ContactMessage
 
 @login_required
-def contact_restaurant(request):
-   
+def contact_restaurant(request, booking_id=None):
     user_bookings = Booking.objects.filter(user=request.user)
 
     if request.method == "POST":
@@ -72,17 +71,21 @@ def contact_restaurant(request):
         if form.is_valid():
             message = form.save(commit=False)
 
-           
+
             if message.booking in user_bookings:
                 message.save()
                 messages.success(request, "Your message has been sent.")
-                return redirect('contact_restaurant')
+                return redirect('booking_list')
+            
             else:
-                form.add_error('booking', "Invalid booking selected.")
-    
+                form.add_error('booking', "Invalid booking.")
+
+
     else:
         form = ContactMessageForm()
-        form.fields['booking'].queryset = user_bookings 
+        form.fields['booking'].queryset = user_bookings
+        if booking_id:
+            form.fields['booking'].initial = Booking.objects.get(id=booking_id)
 
 
     return render(request, "bookings/contact_restaurant.html", {"form": form})
