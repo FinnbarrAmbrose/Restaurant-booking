@@ -11,6 +11,7 @@
                     <strong>Date:</strong> {{ booking.date }} | 
                     <strong>Time:</strong> {{ booking.time }} | 
                     <strong>Guests:</strong> {{ booking.guests }}
+                    <a href="{% url 'contact_booking' booking.id %}" class="btn custom-btn btn-sm">Special Requests</a>
                     <a href="{% url 'booking_update' booking.id %}" class="btn btn-warning btn-sm">Edit</a>
                     <a href="{% url 'booking_delete' booking.id %}" class="btn btn-danger btn-sm">Delete</a>
                 </li>
