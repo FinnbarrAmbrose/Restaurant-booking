@@ -59,7 +59,35 @@ def booking_delete(request, booking_id):
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, ContactMessageForm
+from .models import Booking, ContactMessage
+
+@login_required
+def contact_restaurant(request):
+   
+    user_bookings = Booking.objects.filter(user=request.user)
+
+    if request.method == "POST":
+        form = ContactMessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+
+           
+            if message.booking in user_bookings:
+                message.save()
+                messages.success(request, "Your message has been sent.")
+                return redirect('contact_restaurant')
+            else:
+                form.add_error('booking', "Invalid booking selected.")
+    
+    else:
+        form = ContactMessageForm()
+        form.fields['booking'].queryset = user_bookings 
+
+
+    return render(request, "bookings/contact_restaurant.html", {"form": form})
+
+
  
 def register(request):
     if request.method == "POST":
