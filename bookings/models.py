@@ -11,7 +11,7 @@ class Booking(models.Model):
 
 
 class ContactMessage(models.Model):
-    booking = models.ForeignKey('Booking', on_delete=models.CASCADE)
+    booking = models.OneToOneField('Booking', on_delete=models.CASCADE)
     dietary_preferences = models.CharField(max_length=255, blank=True)
     additional_notes = models.TextField(blank=True)
     submitted_at = models.DateTimeField(auto_now_add=True)
