@@ -1,10 +1,23 @@
 from django import forms
-from .models import Booking
+from .models import Booking, ContactMessage
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from datetime import date, time
 from django.db.models import Sum
+
+
+
+class ContactMessageForm(forms.ModelForm):
+    class Meta:
+        model = ContactMessage
+        fields = ['booking', 'dietary_preferences', 'additional_notes']
+        widgets = {
+            'booking': forms.Select(attrs={'class': 'form-control'}),
+            'dietary_preferences': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'E.g. Vegetarian, Nut allergy'}),
+            'additional_notes': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Any special requirements like wheelchair access'}),
+        }
+
 
 
 
