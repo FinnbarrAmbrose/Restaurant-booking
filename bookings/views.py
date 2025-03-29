@@ -101,6 +101,7 @@ def register(request):
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+            messages.success(request, f"Welcome {username}, your account was created successfully!")
             return redirect("home")
     else:
         form = UserRegisterForm()
