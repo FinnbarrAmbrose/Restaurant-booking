@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.decorators import login_required
-from .models import Booking
 from .forms import BookingForm
 from django.contrib import messages 
+from django.contrib.auth.forms import UserCreationForm
+from .forms import UserRegisterForm, ContactMessageForm
+from .models import Booking, ContactMessage
 
 
 def home(request):
@@ -24,6 +26,7 @@ def booking_create(request):
             booking = form.save(commit=False)
             booking.user = request.user  # Assign booking to the logged-in user
             booking.save()
+            messages.success(request, "Booking successfully created!")
             return redirect("booking_list")  # Redirect to booking list
     else:
         form = BookingForm()
@@ -38,6 +41,7 @@ def booking_update(request, booking_id):
         form = BookingForm(request.POST, instance=booking)
         if form.is_valid():
             form.save()
+            messages.success(request, "Booking successfully updated!")
             return redirect("booking_list")  # Redirect to booking list
     else:
         form = BookingForm(instance=booking)
@@ -50,17 +54,14 @@ def booking_delete(request, booking_id):
 
     if request.method == "POST":
         booking.delete()
+        messages.success(request, "Booking successfully cancelled.")
         return redirect("booking_list")  # Redirect to booking list
 
     return render(request, "bookings/booking_confirm_delete.html", {"booking": booking})
 
 
-# Login and registration views
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
-from .forms import UserRegisterForm, ContactMessageForm
-from .models import Booking, ContactMessage
+
+
 
 @login_required
 def contact_restaurant(request, booking_id=None):
