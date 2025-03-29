@@ -9,6 +9,8 @@ class Booking(models.Model):
     guests = models.PositiveIntegerField()  # Number of guests
     created_at = models.DateTimeField(auto_now_add=True)  # Auto timestamp when created
 
+    def __str__(self):
+        return f"{self.date.strftime('%a %d %b')} at {self.time.strftime('%I:%M %p')} — {self.guests} guests"
 
 class ContactMessage(models.Model):
     booking = models.OneToOneField('Booking', on_delete=models.CASCADE)
