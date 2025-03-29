@@ -23,20 +23,6 @@ class ContactMessageForm(forms.ModelForm):
 
 class BookingForm(forms.ModelForm):
     
-# opens times
-    TIME_CHOICES = [
-        (time(18, 0), "6:00 PM"),
-        (time(19, 0), "7:00 PM"),
-        (time(20, 0), "8:00 PM"),
-        (time(21, 0), "9:00 PM"),
-        (time(22, 0), "10:00 PM"),
-        (time(23, 0), "11:00 PM"),
-    ]
-
-    time = forms.ChoiceField(
-        choices=TIME_CHOICES,
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
 
 
     class Meta:
@@ -76,17 +62,7 @@ class BookingForm(forms.ModelForm):
         
         return cleaned_data
 
-    def clean(self):
-        booking_date = self.cleaned_data.get('date')
-
-        
-            
-        existing_bookings = Booking.objects.filter(date=booking_date).count()
-        if existing_bookings >= 10:
-            raise ValidationError("Sorry, we are to put popularon this day. Please select another day.")
-
-
-        return booking_date
+    
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)
