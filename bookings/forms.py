@@ -6,7 +6,14 @@ from django.core.exceptions import ValidationError
 from datetime import date, time
 from django.db.models import Sum
 
-
+TIME_CHOICES = [
+    (time(18, 0), '18:00 PM'),
+    (time(19, 0), '19:00 PM'),
+    (time(20, 0), '20:00 PM'),
+    (time(21, 0), '21:00 PM'),
+    (time(22, 0), '22:00 PM'),
+    (time(23, 0), '23:00 PM'),
+]
 
 class ContactMessageForm(forms.ModelForm):
     class Meta:
@@ -22,7 +29,10 @@ class ContactMessageForm(forms.ModelForm):
 
 
 class BookingForm(forms.ModelForm):
-    
+    time = forms.ChoiceField(
+        choices=TIME_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
 
     class Meta:
