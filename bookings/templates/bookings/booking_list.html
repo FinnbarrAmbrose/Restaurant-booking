@@ -7,7 +7,7 @@
     {% if bookings %}
         <ul class="list-group">
             {% for booking in bookings %}
-                <li class="list-group-item">
+                <li class="list-group-item mb-3 rounded">
                     <strong>Date:</strong> {{ booking.date }} | 
                     <strong>Time:</strong> {{ booking.time }} | 
                     <strong>Guests:</strong> {{ booking.guests }}
