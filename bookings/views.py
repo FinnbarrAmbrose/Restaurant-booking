@@ -66,28 +66,28 @@ def booking_delete(request, booking_id):
 @login_required
 def contact_restaurant(request, booking_id=None):
     user_bookings = Booking.objects.filter(user=request.user)
-
     if request.method == "POST":
         form = ContactMessageForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
-
-
-            if message.booking in user_bookings:
-                message.save()
-                messages.success(request, "Your message has been sent.")
-                return redirect('booking_list')
-            
+            if ContactMessage.objects.filter(booking=message.booking).exists():
+                    form.add_error('booking', "You've already submitted a special request for this booking.")
+                else:
+                    message.save()
+                    messages.success(request, "Your message has been sent.")
+                    return redirect('booking_list')
             else:
                 form.add_error('booking', "Invalid booking.")
-
-
     else:
         form = ContactMessageForm()
         form.fields['booking'].queryset = user_bookings
         if booking_id:
             form.fields['booking'].initial = Booking.objects.get(id=booking_id)
+           if ContactMessage.objects.filter(booking=booking).exists():
+                messages.warning(request, "You have already submitted a special request for this booking.")
+                return redirect('booking_list')
 
+            form.fields['booking'].initial = booking
 
     return render(request, "bookings/contact_restaurant.html", {"form": form})
 
