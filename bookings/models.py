@@ -16,10 +16,19 @@ class Meta:
         ordering = ['date', 'time'] 
 
 class ContactMessage(models.Model):
-    booking = models.OneToOneField('Booking', on_delete=models.CASCADE)
-    dietary_preferences = models.CharField(max_length=255)
+    booking = models.ForeignKey(
+        'bookings.Booking',
+        on_delete=models.CASCADE,
+        related_name='contact_messages'
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='contact_messages'
+    )
+    dietary_preferences = models.TextField()
     additional_notes = models.TextField()
-    submitted_at = models.DateTimeField(auto_now_add=True)
-
+    created_at = models.DateTimeField(auto_now_add=True)
+    
     def __str__(self):
-        return f"Note for Booking #{self.booking.id}"
+        return f"Special request for {self.booking} by {self.user}"
