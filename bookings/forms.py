@@ -18,19 +18,36 @@ TIME_CHOICES = [
 class ContactMessageForm(forms.ModelForm):
     class Meta:
         model = ContactMessage
-        fields = ['booking', 'dietary_preferences', 'additional_notes']
+        fields = ['dietary_preferences', 'additional_notes']
         widgets = {
-            'booking': forms.Select(attrs={'class': 'form-control'}),
-            'dietary_preferences': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'E.g. Vegetarian, Nut allergy'}),
-            'additional_notes': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Any special requirements like wheelchair access'}),
+            'dietary_preferences': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'E.g. Vegetarian, Nut allergy'
+                }
+            ),
+            'additional_notes': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Any special requirements like wheelchair access'
+                }
+            ),
         }
+
     def clean(self):
         cleaned_data = super().clean()
-        dietary_preferences = cleaned_data.get('dietary_preferences')
-        additional_notes = cleaned_data.get('additional_notes')
 
-        if not dietary_preferences and not additional_notes:
-            raise forms.ValidationError("Please provide dietary preferences or additional notes.")
+       
+        if not cleaned_data.get('dietary_preferences', '').strip():
+            self.add_error(
+                'dietary_preferences',
+                'Please enter your dietary preferences.'
+            )
+        if not cleaned_data.get('additional_notes', '').strip():
+            self.add_error(
+                'additional_notes',
+                'Please enter additional notes.'
+            )
 
         return cleaned_data
 
