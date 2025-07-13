@@ -4,11 +4,14 @@ import os
 import sys
 
 if os.path.exists("env.py"):
-    import env
+    pass
+
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'restaurant_booking.settings')
+    os.environ.setdefault(
+        'DJANGO_SETTINGS_MODULE',
+        'restaurant_booking.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

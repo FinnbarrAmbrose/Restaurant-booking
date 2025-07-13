@@ -3,14 +3,15 @@ import datetime
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from .models import Booking, ContactMessage
-from .forms import BookingForm, ContactMessageForm
+from .models import Booking
+from .forms import ContactMessageForm
 
 
 class BookingModelTest(TestCase):
     def setUp(self):
         # create a user and a booking for tomorrow at 18:00
-        self.user = User.objects.create_user(username="tester", password="pass")
+        self.user = User.objects.create_user(
+            username="tester", password="pass")
         self.booking = Booking.objects.create(
             user=self.user,
             date=datetime.date.today() + datetime.timedelta(days=1),
@@ -60,7 +61,7 @@ class ContactMessageFormTest(TestCase):
     def test_valid_form_saves(self):
         data = {
             'dietary_preferences': 'Vegetarian',
-            'additional_notes':     'No peanuts, please'
+            'additional_notes': 'No peanuts, please'
         }
         form = ContactMessageForm(data=data)
         self.assertTrue(form.is_valid())
@@ -68,12 +69,12 @@ class ContactMessageFormTest(TestCase):
         # mirror your view logic: commit=False, set booking & user, then save
         msg = form.save(commit=False)
         msg.booking = self.booking
-        msg.user    = self.user
+        msg.user = self.user
         msg.save()
 
         # now all fields should be set correctly
         self.assertEqual(msg.dietary_preferences, 'Vegetarian')
-        self.assertEqual(msg.additional_notes,     'No peanuts, please')
-        self.assertEqual(msg.booking,              self.booking)
-        self.assertEqual(msg.user,                 self.user)
-        self.assertIn(str(self.user),              str(msg))
+        self.assertEqual(msg.additional_notes, 'No peanuts, please')
+        self.assertEqual(msg.booking, self.booking)
+        self.assertEqual(msg.user, self.user)
+        self.assertIn(str(self.user), str(msg))
