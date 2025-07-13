@@ -1,9 +1,10 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from datetime import date, time
-from .models import Booking, ContactMessage
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from datetime import date, time
+
+from .models import Booking, ContactMessage
 
 TIME_CHOICES = [
     (time(18, 0), '18:00 PM'),
@@ -20,11 +21,9 @@ class ContactMessageForm(forms.ModelForm):
     Form for users to submit dietary preferences and additional notes
     linked to a Booking.
     """
-
     class Meta:
         model = ContactMessage
-        fields = ['dietary_preferences', 
-                  'additional_notes']
+        fields = ['dietary_preferences', 'additional_notes']
         widgets = {
             'dietary_preferences': forms.TextInput(
                 attrs={
@@ -32,7 +31,7 @@ class ContactMessageForm(forms.ModelForm):
                     'placeholder': (
                         'E.g. Vegetarian, '
                         'Nut allergy'
-                    )
+                    ),
                 }
             ),
             'additional_notes': forms.Textarea(
@@ -41,29 +40,30 @@ class ContactMessageForm(forms.ModelForm):
                     'placeholder': (
                         'Any special requirements '
                         'like wheelchair access'
-                    )
+                    ),
                 }
             ),
         }
 
     def clean(self):
-        """ Ensure both fields are filled out (not blank or whitespace)."""
+        """
+        Ensure both fields are filled out (not blank or whitespace).
+        """
         cleaned_data = super().clean()
 
-        if not cleaned_data.get('dietary_preferences', 
-                                '').strip():
+        if not cleaned_data.get('dietary_preferences', '').strip():
             self.add_error(
                 'dietary_preferences',
                 'Please enter your dietary preferences.'
             )
-        if not cleaned_data.get('additional_notes',
-                                 '').strip():
+        if not cleaned_data.get('additional_notes', '').strip():
             self.add_error(
                 'additional_notes',
                 'Please enter additional notes.'
             )
 
         return cleaned_data
+
 
 class BookingForm(forms.ModelForm):
     """
@@ -80,18 +80,23 @@ class BookingForm(forms.ModelForm):
         fields = ['date', 'time', 'guests']
         widgets = {
             'date': forms.DateInput(
-                attrs={'type': 'date', 
-                       'class': 'form-control'}
+                attrs={
+                    'type': 'date',
+                    'class': 'form-control',
+                }
             ),
             'time': forms.TimeInput(
-                attrs={'type': 'time', 
-                       'class': 'form-control'}
+                attrs={
+                    'type': 'time',
+                    'class': 'form-control',
+                }
             ),
-            # Limit the guests to 1 to 4
             'guests': forms.NumberInput(
-                attrs={'class': 'form-control', 
-                       'min': 1,
-                         'max': 4}
+                attrs={
+                    'class': 'form-control',
+                    'min': 1,
+                    'max': 4,
+                }
             ),
         }
 
@@ -108,8 +113,7 @@ class BookingForm(forms.ModelForm):
 
     def clean(self):
         """
-        Validate booking date (not in the past) 
-        and capacity for the date.
+        Validate booking date (not in the past) and capacity for the date.
         """
         cleaned_data = super().clean()
         booking_date = cleaned_data.get('date')
@@ -128,7 +132,6 @@ class BookingForm(forms.ModelForm):
             )
             return cleaned_data
 
-        # Max 10 tables per day
         total_tables_booked = Booking.objects.filter(date=booking_date).count()
         if total_tables_booked >= 10:
             raise ValidationError(
@@ -139,19 +142,22 @@ class BookingForm(forms.ModelForm):
             )
 
         return cleaned_data
-        
+
+
 class UserRegisterForm(UserCreationForm):
     """
-    Form for user registration including email.
+    Form for user registration including username, email, and passwords.
     """
     email = forms.EmailField(required=True)
 
     class Meta:
         model = User
-        fields = ["username", 
-                  "email", 
-                  "password1", 
-                  "password2"]
+        fields = [
+            'username',
+            'email',
+            'password1',
+            'password2',
+        ]
 
     def __init__(self, *args, **kwargs):
         """
@@ -159,4 +165,4 @@ class UserRegisterForm(UserCreationForm):
         """
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs.update({"class": "form-control"})
+            field.widget.attrs.update({'class': 'form-control'})
