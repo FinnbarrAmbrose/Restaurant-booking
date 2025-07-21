@@ -18,6 +18,7 @@ if not DJANGO_SECRET_KEY:
     )
 SECRET_KEY = DJANGO_SECRET_KEY
 
+
 # DEBUG: default False in production
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
