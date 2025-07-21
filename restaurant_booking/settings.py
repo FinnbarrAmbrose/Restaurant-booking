@@ -22,7 +22,7 @@ SECRET_KEY = DJANGO_SECRET_KEY
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
 # Hosts allowed to serve the site
-ALLOWED_HOSTS = [ os.getenv("DJANGO_ALLOWED_HOSTS","localhost,127.0.0.1").split(",")]
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
 # Login redirect
 LOGIN_URL = "/login/"
@@ -72,20 +72,14 @@ WSGI_APPLICATION = 'restaurant_booking.wsgi.application'
 # Database configuration: fallback to SQLite if DATABASE_URL is unset
 _db_url = os.getenv("DATABASE_URL")
 if _db_url:
-    DATABASES = {
-        'default': dj_database_url.parse(
-            _db_url,
-            conn_max_age=600
-        )
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-
+    
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
