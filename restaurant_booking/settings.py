@@ -19,7 +19,7 @@ if not DJANGO_SECRET_KEY:
 SECRET_KEY = DJANGO_SECRET_KEY
 
 # DEBUG: default False in production
-DJANGO_DEBUG=False
+DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
 # Hosts allowed to serve the site
 ALLOWED_HOSTS = [ os.getenv("DJANGO_ALLOWED_HOSTS","localhost,127.0.0.1").split(",")]
