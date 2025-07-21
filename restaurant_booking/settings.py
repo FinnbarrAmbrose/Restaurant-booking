@@ -22,7 +22,10 @@ SECRET_KEY = DJANGO_SECRET_KEY
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
 # Hosts allowed to serve the site
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1", "restaurant-booking-a-d5df88975bf0.herokuapp.com").split(",")
+ALLOWED_HOSTS = os.getenv(
+    "DJANGO_ALLOWED_HOSTS",
+    "localhost,127.0.0.1"
+).split(",")
 
 # Login redirect
 LOGIN_URL = "/login/"
