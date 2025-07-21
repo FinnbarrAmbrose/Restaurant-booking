@@ -11,14 +11,15 @@ class Booking(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{
-            self.date.strftime('%a %d %b')} at {
-            self.time.strftime('%I:%M %p')} — {
-            self.guests} guests"
+        return (
+            f"{self.date.strftime('%a %d %b')} at "
+            f"{self.time.strftime('%I:%M %p')} — "
+            f"{self.guests} guests"
+        )
 
 
-class Meta:
-    ordering = ['date', 'time']
+    class Meta:
+        ordering = ['date', 'time']
 
 
 class ContactMessage(models.Model):
