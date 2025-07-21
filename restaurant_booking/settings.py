@@ -22,13 +22,7 @@ SECRET_KEY = DJANGO_SECRET_KEY
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
 # Hosts allowed to serve the site
-ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.getenv(
-        "DJANGO_ALLOWED_HOSTS",
-        "localhost,127.0.0.1"
-    ).split(",")
-]
+ALLOWED_HOSTS = [ os.getenv("DJANGO_ALLOWED_HOSTS","localhost,127.0.0.1").split(",")]
 
 # Login redirect
 LOGIN_URL = "/login/"
