@@ -1,9 +1,15 @@
 core.Microsoft*
 core.mongo*
 core.python*
-env.py
 __pycache__/
 *.py[cod]
 node_modules/
 .github/
 cloudinary_python.txt
+.env
+env.py
+
+
+# IDE / system
+.vscode/
+.DS_Store
