@@ -1,0 +1,5 @@
+[flake8]
+exclude =
+    bookings/migrations/,
+    env.py
+max-line-length = 79
