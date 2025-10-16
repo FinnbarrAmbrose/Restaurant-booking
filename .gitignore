@@ -7,9 +7,13 @@ node_modules/
 .github/
 cloudinary_python.txt
 .env
+
 env.py
+
 
 # IDE / system
 .vscode/
+.DS_Store
+
 .DS_Store
 
